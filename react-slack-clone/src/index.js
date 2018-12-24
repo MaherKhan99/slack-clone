@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import firebase from './firebase';
 import rootReducer from './reducers/index';
-import {setUser} from "./actions";
+import {setUser, clearUser} from "./actions";
 import Spinner from "./Spinner";
 
 import {BrowserRouter as Router, Switch, Route, withRouter} from  'react-router-dom';
@@ -25,6 +25,9 @@ class Root extends React.Component {
                 //console.log(user);
                 this.props.setUser(user);
                 this.props.history.push("/");
+            } else {
+                this.props.history.push("/login"); //if user is not found by listener push to login
+                this.props.clearUser();
             }
         });
     }
@@ -42,9 +45,9 @@ class Root extends React.Component {
 
 const mapStateFromProps = state => ({
     isLoading: state.user.isLoading
-})
+});
 
-const RootWithAuth = withRouter(connect(mapStateFromProps, {setUser})(Root));
+const RootWithAuth = withRouter(connect(mapStateFromProps, {setUser, clearUser})(Root));
 
 ReactDOM.render(<Provider store={store}><Router><RootWithAuth /></Router></Provider>, document.getElementById('root'));
 registerServiceWorker();
