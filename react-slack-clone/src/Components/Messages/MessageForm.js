@@ -120,8 +120,8 @@ class MessageForm extends React.Component {
             })
             .catch(err => {
                 console.error(err);
-                this.setState({errors: this.state.errors.concat(err)})
-            })
+                this.setState({errors: this.state.errors.concat(err)});
+            });
     }
     
     render () {
@@ -136,7 +136,7 @@ class MessageForm extends React.Component {
                 <Button.Group icon width="2">
                     <Button onClick={this.sendMessage} disabled={loading} color="orange" content="Add reply" 
                     labelPosition="left" icon="edit" />
-                    <Button color="teal" disbled={uploadState === "uploading"} onClick={this.openModal} 
+                    <Button color="teal" disabled={uploadState === "uploading"} onClick={this.openModal} 
                     content="Upload media" labelPosition="right" icon="cloud upload" />
                 </Button.Group>
                 <FileModal modal={modal} closeModal={this.closeModal} uploadFile={this.uploadFile} />
