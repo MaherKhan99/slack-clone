@@ -15,10 +15,20 @@ class DirectMessages extends React.Component {
         presenceRef: firebase.database().ref("presence")
     }
     
-    componentDidMount () {
+    componentDidMount() {
         if(this.state.user){
             this.addListeners(this.state.user.uid);
         }
+    }
+    
+    componentWillUnmount() {
+        this.removeListeners();
+    }
+    
+    removeListeners = () => {
+        this.state.usersRef.off();
+        this.state.presenceRef.off();
+        this.state.connectedRef.off();
     }
     
     addListeners = currentUserUid => {
